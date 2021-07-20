@@ -15,7 +15,8 @@ export const validValues = [
   'rain',
   'snow',
   'drizzle',
-  'thunderstorm'
+  'thunderstorm',
+  'mist'
 ]
 
 const stateByName = {
@@ -24,7 +25,8 @@ const stateByName = {
   rain: WiRain,
   snow: WiSnow,
   drizzle: WiRaindrop,
-  thunderstorm: WiThunderstorm
+  thunderstorm: WiThunderstorm,
+  mist: WiSnow,
 }
 
 const IconState = ({ state }) => {
