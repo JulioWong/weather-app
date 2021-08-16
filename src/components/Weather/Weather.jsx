@@ -26,7 +26,7 @@ const Weather = ({ temperature, state }) => {
 }
 
 Weather.propTypes = {
-  temperature: PropTypes.string,
+  temperature: PropTypes.number,
   state: PropTypes.oneOf(validValues),
 }
 

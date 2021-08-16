@@ -12,7 +12,7 @@ import PropTypes from 'prop-types'
 
 const AppFrame = ({ children }) => {
   return (
-    <Grid container justify="center" alignItems="center">
+    <Grid container justifyContent="center" alignItems="center">
       <AppBar position="static">
         <Toolbar>
           <IconButton color="inherit" aria-label="menu">

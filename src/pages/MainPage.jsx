@@ -13,8 +13,8 @@ const cities = [
 
 const MainPage = props => {
   const history = useHistory()
-  const onclickHandler = () => {
-    history.push('/city')
+  const onclickHandler = (city, countryCode) => {
+    history.push(`/city/${countryCode}/${city}`)
   }
   return (
     <AppFrame>

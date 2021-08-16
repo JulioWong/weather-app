@@ -20,7 +20,7 @@ const renderForecastItem = forecast => {
 
 const ForeCast = ({ forecastItemList }) => {
   return (
-    <Grid container justify="space-around" alignItems="center">
+    <Grid container justifyContent="space-around" alignItems="center">
       {
         forecastItemList.map(forecast => renderForecastItem(forecast))
       }
@@ -31,7 +31,7 @@ const ForeCast = ({ forecastItemList }) => {
 ForeCast.propTypes = {
   forecastItemList: PropTypes.arrayOf(PropTypes.shape({
     weekDay: PropTypes.string.isRequired,
-    hour: PropTypes.string.isRequired,
+    hour: PropTypes.number.isRequired,
     state: PropTypes.oneOf(validValues).isRequired,
     temperature: PropTypes.number.isRequired,
   }).isRequired,),
