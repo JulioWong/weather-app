@@ -1,69 +1,28 @@
 import React from 'react'
 import Grid from '@material-ui/core/Grid'
-import { useParams } from 'react-router'
+import { LinearProgress } from '@material-ui/core'
 import AppFrame from '../components/AppFrame'
 import CityInfo from './../components/CityInfo'
 import Weather from './../components/Weather'
 import WeatherDetails from './../components/WeatherDetails'
 import ForecastChart from './../components/ForecastChart'
 import ForeCast from './../components/ForeCast'
-const dataExample = [
-  {
-      "dayHour": "Jue 18",
-      "min": 14,
-      "max": 22,
-  },
-  {
-      "dayHour": "Vie 06",
-      "min": 18,
-      "max": 27,
-  },
-  {
-      "dayHour": "Vie 12",
-      "min": 18,
-      "max": 28,
-  },
-  {
-      "dayHour": "Vie 18",
-      "min": 18,
-      "max": 25,
-  },
-  {
-      "dayHour": "Sab 06",
-      "min": 15,
-      "max": 22,
-  },
-  {
-      "dayHour": "Sab 12",
-      "min": 12,
-      "max": 19,
-  }
-]
-
-const forecastItemListExample = [
-  {hour: 18, state: "snow", temperature: 17, weekDay: "Jueves"},
-  {hour: 6, state: "clouds", temperature: 18, weekDay: "Viernes"},
-  {hour: 12, state: "drizzle", temperature: 18, weekDay: "Viernes"},
-  {hour: 18, state: "clouds", temperature: 19, weekDay: "Viernes"},
-  {hour: 14, state: "rain", temperature: 17, weekDay: "Sábado"},
-  {hour: 14, state: "rain", temperature: 17, weekDay: "Domingo"},
-]
+import useCityPage from '../hooks/useCityPage'
+import useCityList from '../hooks/useCityList'
+import { getCityCode } from '../utils/utils'
+import { getCountryNameByCountryCode } from '../utils/serviceCities'
 
 const CityPage = props => {
+  const { city, countryCode, data, forecastItemList } = useCityPage()
+  const { allWeather } = useCityList([{ city, countryCode }])
+  const weather = allWeather[getCityCode(city, countryCode)]
 
-  const params = useParams()
-
-
-
-  const city = "Buenos Aires"
-  const country = "Argentina"
-  const state = "clouds"
-  const temperature = 20
-  const humidity = 80
-  const wind = 5
-  const data = dataExample
-  const forecastItemList = forecastItemListExample
-
+  const country = countryCode && getCountryNameByCountryCode(countryCode)
+  const humidity =  weather && weather.humidity
+  const wind =  weather && weather.wind
+  const state = weather && weather.state
+  const temperature = weather && weather.temperature
+  
   return (
     <AppFrame>
       <Grid container justifyContent="center" direction="column" spacing={2}>
@@ -72,13 +31,24 @@ const CityPage = props => {
       </Grid>
       <Grid container item xs={12} justifyContent="center">
         <Weather state={state} temperature={temperature} />
-        <WeatherDetails humidity={humidity} wind={wind} />
+        {
+          humidity && wind && <WeatherDetails humidity={humidity} wind={wind} />
+        }
       </Grid>
       <Grid item>
-        <ForecastChart data={data} />
+        {
+          !data && !forecastItemList && <LinearProgress />
+        }
       </Grid>
       <Grid item>
-        <ForeCast forecastItemList={forecastItemList} />
+        {
+          data && <ForecastChart data={data} />
+        }
+      </Grid>
+      <Grid item>
+        {
+          forecastItemList && <ForeCast forecastItemList={forecastItemList} />
+        }
       </Grid>
     </Grid>
     </AppFrame>
