@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import Grid from '@material-ui/core/Grid'
 import { LinearProgress } from '@material-ui/core'
 import AppFrame from '../components/AppFrame'
@@ -12,10 +12,18 @@ import useCityList from '../hooks/useCityList'
 import { getCityCode } from '../utils/utils'
 import { getCountryNameByCountryCode } from '../utils/serviceCities'
 
-const CityPage = props => {
-  const { city, countryCode, data, forecastItemList } = useCityPage()
-  const { allWeather } = useCityList([{ city, countryCode }])
+const CityPage = ({ actions, data }) => {
+  const { onsetAllWeather, onsetChartData, onsetForecastItemList } = actions
+  const { allWeather, allChartData, allForecastItemList } = data
+
+  const { city, countryCode } = useCityPage(allChartData, allForecastItemList, onsetChartData, onsetForecastItemList)
+  const cities = useMemo(() => [{ city, countryCode }], [city, countryCode])
+
+  useCityList(cities, onsetAllWeather, allWeather)
+
   const weather = allWeather[getCityCode(city, countryCode)]
+  const chartData = allChartData[getCityCode(city, countryCode)]
+  const forecastItemList = allForecastItemList[getCityCode(city, countryCode)]
 
   const country = countryCode && getCountryNameByCountryCode(countryCode)
   const humidity =  weather && weather.humidity
@@ -37,12 +45,12 @@ const CityPage = props => {
       </Grid>
       <Grid item>
         {
-          !data && !forecastItemList && <LinearProgress />
+          !chartData && !forecastItemList && <LinearProgress />
         }
       </Grid>
       <Grid item>
         {
-          data && <ForecastChart data={data} />
+          chartData && <ForecastChart data={chartData} />
         }
       </Grid>
       <Grid item>

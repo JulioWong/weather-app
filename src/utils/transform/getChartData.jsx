@@ -5,6 +5,7 @@ const getChartData = (data) => {
   const daysAhead = [0, 1, 2, 3, 4, 5]
   const days = daysAhead.map(d => moment().add(d, 'd'))
   
+  // console.log(data, data.list, 'AQUIII')
   const dataAux = days.map(d => {
     const tempObjArray = data.list.filter(item => {
       const dayOfYear = moment.unix(item.dt).dayOfYear()
