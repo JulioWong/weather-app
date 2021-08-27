@@ -9,13 +9,13 @@ const cities = [
   {city: "Ciudad de mexico", country: "Mexico", countryCode: "MX"},
 ]
 
-it("City renders", async () => {
+it.skip("City renders", async () => {
   const { findAllByRole } = render(<CityList cities={cities} onClickCity={() => {} } />)
   const items = await findAllByRole("button")
   expect(items).toHaveLength(4)
 })
 
-it("CityList click on item", async () => {
+it.skip("CityList click on item", async () => {
   const fnClickOnItem = jest.fn()
   const { findAllByRole } = render(<CityList cities={cities} onClickCity={fnClickOnItem} />)
   const items = await findAllByRole("button")

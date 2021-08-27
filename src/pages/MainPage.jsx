@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
 import Paper from '@material-ui/core/Paper'
 import AppFrame from '../components/AppFrame'
@@ -8,9 +8,10 @@ import { getCities } from '../utils/serviceCities'
 const MainPage = ({ actions, data }) => {
   console.log('ENTREEE')
   const history = useHistory()
-  const onclickHandler = (city, countryCode) => {
+  const onclickHandler = useCallback((city, countryCode) => {
     history.push(`/city/${countryCode}/${city}`)
-  }
+  }, [history])
+
   return (
     <AppFrame>
       <Paper elevation={3}>

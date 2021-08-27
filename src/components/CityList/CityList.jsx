@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import Alert from '@material-ui/lab/Alert'
 import Grid from '@material-ui/core/Grid'
@@ -10,8 +10,11 @@ import useCityList from '../../hooks/useCityList'
 import { getCityCode } from '../../utils/utils'
 
 const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
-  const { city, country, countryCode } = cityAndCountry
+  const { city, countryCode } = cityAndCountry
+  return <CityListItem key={getCityCode(city, countryCode)} eventOnClickCity={eventOnClickCity} weather={weather} {...cityAndCountry} />
+}
 
+const CityListItem = memo(({ city, country, countryCode, eventOnClickCity, weather }) => {
   return (
     <ListItem button key={getCityCode(city, countryCode)} onClick={() => eventOnClickCity(city, countryCode) } >
       <Grid container justifyContent="center" alignItems="center">
@@ -26,13 +29,13 @@ const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
       </Grid>
     </ListItem>
   )
-}
+})
 
 const CityList = ({ cities, onClickCity, actions, data }) => {
   console.log('LOGGER', cities)
-  const { onsetAllWeather } = actions
+  // const { onsetAllWeather } = actions
   const { allWeather } = data
-  const { error, setError } = useCityList(cities, onsetAllWeather, allWeather)
+  const { error, setError } = useCityList(cities, allWeather, actions)
 
   return (
     <div>
@@ -62,4 +65,4 @@ CityList.propTypes = {
   onClickCity: PropTypes.func.isRequired,
 }
 
-export default CityList
+export default memo(CityList)

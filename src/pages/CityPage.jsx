@@ -13,13 +13,13 @@ import { getCityCode } from '../utils/utils'
 import { getCountryNameByCountryCode } from '../utils/serviceCities'
 
 const CityPage = ({ actions, data }) => {
-  const { onsetAllWeather, onsetChartData, onsetForecastItemList } = actions
+  // const { onsetAllWeather, onsetChartData, onsetForecastItemList } = actions
   const { allWeather, allChartData, allForecastItemList } = data
 
-  const { city, countryCode } = useCityPage(allChartData, allForecastItemList, onsetChartData, onsetForecastItemList)
+  const { city, countryCode } = useCityPage(allChartData, allForecastItemList, actions)
   const cities = useMemo(() => [{ city, countryCode }], [city, countryCode])
 
-  useCityList(cities, onsetAllWeather, allWeather)
+  useCityList(cities, allWeather, actions)
 
   const weather = allWeather[getCityCode(city, countryCode)]
   const chartData = allChartData[getCityCode(city, countryCode)]
