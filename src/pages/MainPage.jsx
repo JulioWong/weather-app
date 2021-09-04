@@ -5,7 +5,7 @@ import AppFrame from '../components/AppFrame'
 import CityList from '../components/CityList'
 import { getCities } from '../utils/serviceCities'
 
-const MainPage = ({ actions, data }) => {
+const MainPage = () => {
   console.log('ENTREEE')
   const history = useHistory()
   const onclickHandler = useCallback((city, countryCode) => {
@@ -15,7 +15,7 @@ const MainPage = ({ actions, data }) => {
   return (
     <AppFrame>
       <Paper elevation={3}>
-        <CityList cities={getCities()} onClickCity={onclickHandler} actions={actions} data={data}/>
+        <CityList cities={getCities()} onClickCity={onclickHandler} />
       </Paper>
     </AppFrame>
   )

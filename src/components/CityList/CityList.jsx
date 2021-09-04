@@ -8,6 +8,7 @@ import CityInfo from '../CityInfo'
 import Weather from '../Weather'
 import useCityList from '../../hooks/useCityList'
 import { getCityCode } from '../../utils/utils'
+import { useWeatherDispatchContext, useWeatherStateContext } from '../../WeatherContext'
 
 const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
   const { city, countryCode } = cityAndCountry
@@ -31,8 +32,9 @@ const CityListItem = memo(({ city, country, countryCode, eventOnClickCity, weath
   )
 })
 
-const CityList = ({ cities, onClickCity, actions, data }) => {
-  console.log('LOGGER', cities)
+const CityList = ({ cities, onClickCity}) => {
+  const actions = useWeatherDispatchContext()
+  const data = useWeatherStateContext()
   // const { onsetAllWeather } = actions
   const { allWeather } = data
   const { error, setError } = useCityList(cities, allWeather, actions)
